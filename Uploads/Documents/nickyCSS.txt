@@ -1,0 +1,10 @@
+.form-signin h2.form-signin-error {
+    margin: 0;
+    padding:20px 15px;
+    text-align: center;
+    border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0;
+    font-size: 18px;    
+    font-weight: 300;
+    font-family: 'Open Sans', sans-serif;
+}

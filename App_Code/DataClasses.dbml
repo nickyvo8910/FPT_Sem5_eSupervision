@@ -1,0 +1,415 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="eSupervisor" Class="DataClassesDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=.;Initial Catalog=eSupervisor;User ID=sa" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="eSupervisorConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.tblAllocations" Member="tblAllocations">
+    <Type Name="tblAllocation">
+      <Column Name="eventID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="eventCreatorID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="eventAffectedStaffID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="eventAffectedStudentID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="eventType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="eventDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="eventInfo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="eventStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblStudent_tblAllocation" Member="tblStudent" ThisKey="eventAffectedStudentID" OtherKey="studentID" Type="tblStudent" IsForeignKey="true" />
+      <Association Name="tblStaff_tblAllocation" Member="tblStaff" ThisKey="eventAffectedStaffID" OtherKey="staffID" Type="tblStaff" IsForeignKey="true" />
+      <Association Name="tblStaff_tblAllocation1" Member="tblStaff1" ThisKey="eventCreatorID" OtherKey="staffID" Type="tblStaff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblStudents" Member="tblStudents">
+    <Type Name="tblStudent">
+      <Column Name="studentID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentPass" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="studentMailAddr" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentAcademicYear" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="studentAvatar" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="studentBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentAddr" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="studentPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSupervisorID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSecondMarkerID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentLastLogin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblStudent_tblAllocation" Member="tblAllocations" ThisKey="studentID" OtherKey="eventAffectedStudentID" Type="tblAllocation" />
+      <Association Name="tblStudent_tblMeetingMember" Member="tblMeetingMembers" ThisKey="studentID" OtherKey="meetingMemberID" Type="tblMeetingMember" />
+      <Association Name="tblStudent_tblPersonalMessage" Member="tblPersonalMessages" ThisKey="studentID" OtherKey="stuID" Type="tblPersonalMessage" />
+      <Association Name="tblStaff_tblStudent" Member="tblStaff" ThisKey="studentSupervisorID" OtherKey="staffID" Type="tblStaff" IsForeignKey="true" />
+      <Association Name="tblStaff_tblStudent1" Member="tblStaff1" ThisKey="studentSecondMarkerID" OtherKey="staffID" Type="tblStaff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblBlogPosts" Member="tblBlogPosts">
+    <Type Name="tblBlogPost">
+      <Column Name="postID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="postOwnerID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="postDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="postInfo" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="postStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblDocumentComments" Member="tblDocumentComments">
+    <Type Name="tblDocumentComment">
+      <Column Name="commentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="commentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="commentDocID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="commentStaffID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="commentInfo" Type="System.String" DbType="VarChar(500)" CanBeNull="true" />
+      <Column Name="commentStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblDocument_tblDocumentComment" Member="tblDocument" ThisKey="commentDocID" OtherKey="documentID" Type="tblDocument" IsForeignKey="true" />
+      <Association Name="tblStaff_tblDocumentComment" Member="tblStaff" ThisKey="commentStaffID" OtherKey="staffID" Type="tblStaff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblDocuments" Member="tblDocuments">
+    <Type Name="tblDocument">
+      <Column Name="documentID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="documentTitle" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="documentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="documentLink" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="documentDes" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="documentUploader" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="documentStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblDocument_tblDocumentComment" Member="tblDocumentComments" ThisKey="documentID" OtherKey="commentDocID" Type="tblDocumentComment" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblLogFolders" Member="tblLogFolders">
+    <Type Name="tblLogFolder">
+      <Column Name="meetingLogFolder" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="avatarFolder" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="documentFolder" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblMeetingMembers" Member="tblMeetingMembers">
+    <Type Name="tblMeetingMember">
+      <Column Name="meetingID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="meetingMemberID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="memberStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblStudent_tblMeetingMember" Member="tblStudent" ThisKey="meetingMemberID" OtherKey="studentID" Type="tblStudent" IsForeignKey="true" />
+      <Association Name="tblMeeting_tblMeetingMember" Member="tblMeeting" ThisKey="meetingID" OtherKey="meetingID" Type="tblMeeting" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblMeetings" Member="tblMeetings">
+    <Type Name="tblMeeting">
+      <Column Name="meetingID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="meetingType" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="meetingDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="meetingPlace" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="meetingTopic" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="meetingHost" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="meetingLogFile" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="meetingStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblMeeting_tblMeetingMember" Member="tblMeetingMembers" ThisKey="meetingID" OtherKey="meetingID" Type="tblMeetingMember" />
+      <Association Name="tblStaff_tblMeeting" Member="tblStaff" ThisKey="meetingHost" OtherKey="staffID" Type="tblStaff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblPersonalMessages" Member="tblPersonalMessages">
+    <Type Name="tblPersonalMessage">
+      <Column Name="staffID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="stuID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="messSentTime" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="messInfo" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="messStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblStudent_tblPersonalMessage" Member="tblStudent" ThisKey="stuID" OtherKey="studentID" Type="tblStudent" IsForeignKey="true" />
+      <Association Name="tblStaff_tblPersonalMessage" Member="tblStaff" ThisKey="staffID" OtherKey="staffID" Type="tblStaff" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.tblStaffs" Member="tblStaffs">
+    <Type Name="tblStaff">
+      <Column Name="staffID" Type="System.String" DbType="VarChar(20) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="staffName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="staffPass" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="staffMailAddr" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="staffAvatar" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="staffBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="staffAddr" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="staffPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="staffType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="staffStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="tblStaff_tblAllocation" Member="tblAllocations" ThisKey="staffID" OtherKey="eventAffectedStaffID" Type="tblAllocation" />
+      <Association Name="tblStaff_tblAllocation1" Member="tblAllocations1" ThisKey="staffID" OtherKey="eventCreatorID" Type="tblAllocation" />
+      <Association Name="tblStaff_tblStudent" Member="tblStudents" ThisKey="staffID" OtherKey="studentSupervisorID" Type="tblStudent" />
+      <Association Name="tblStaff_tblStudent1" Member="tblStudents1" ThisKey="staffID" OtherKey="studentSecondMarkerID" Type="tblStudent" />
+      <Association Name="tblStaff_tblDocumentComment" Member="tblDocumentComments" ThisKey="staffID" OtherKey="commentStaffID" Type="tblDocumentComment" />
+      <Association Name="tblStaff_tblMeeting" Member="tblMeetings" ThisKey="staffID" OtherKey="meetingHost" Type="tblMeeting" />
+      <Association Name="tblStaff_tblPersonalMessage" Member="tblPersonalMessages" ThisKey="staffID" OtherKey="staffID" Type="tblPersonalMessage" />
+    </Type>
+  </Table>
+  <Function Name="dbo.commentStudentUpload" Method="commentStudentUpload">
+    <Parameter Name="docID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="staffID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="commentInfo" Type="System.String" DbType="VarChar(500)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.uploadNewDocument" Method="uploadNewDocument">
+    <Parameter Name="uploader" Type="System.String" DbType="VarChar(22)" />
+    <Parameter Name="title" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="link" Type="System.String" DbType="VarChar(150)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.getAllocationsByStaff" Method="getAllocationsByStaff">
+    <Parameter Name="eventID" Type="System.Int32" DbType="Int" />
+    <ElementType Name="getAllocationsByStaffResult">
+      <Column Name="eventID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="staffName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="eventType" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="eventDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="eventInfo" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="eventStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getDocLinkByID" Method="getDocLinkByID">
+    <Parameter Name="id" Type="System.Int32" DbType="Int" />
+    <ElementType Name="getDocLinkByIDResult">
+      <Column Name="documentLink" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStaffNameByID" Method="getStaffNameByID">
+    <Parameter Name="ID" Parameter="iD" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="getStaffNameByIDResult">
+      <Column Name="staffName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStaffsByPK" Method="getStaffsByPK">
+    <Parameter Name="ID" Parameter="iD" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="getStaffsByPKResult">
+      <Column Name="staffID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="staffName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="staffMailAddr" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="staffAvatar" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="staffBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="staffAddr" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="staffPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="staffType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="staffStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStaffsLikeName" Method="getStaffsLikeName">
+    <Parameter Name="Name" Parameter="name" Type="System.String" DbType="VarChar(150)" />
+    <ElementType Name="getStaffsLikeNameResult">
+      <Column Name="staffStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="staffType" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="staffPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="staffAddr" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="staffBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="staffAvatar" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="staffMailAddr" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="staffName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="staffID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStudensByLike" Method="getStudensByLike">
+    <Parameter Name="studentName" Type="System.String" DbType="VarChar(150)" />
+    <ElementType Name="getStudensByLikeResult">
+      <Column Name="studentID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentMailAddr" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentAcademicYear" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="studentAvatar" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="studentBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentAddr" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="studentPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSupervisorID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSecondMarkerID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentLastLogin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStudensByPK" Method="getStudensByPK">
+    <Parameter Name="studentID" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="getStudensByPKResult">
+      <Column Name="studentID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentMailAddr" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentAcademicYear" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="studentAvatar" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="studentBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentAddr" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="studentPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSupervisorID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSecondMarkerID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentLastLogin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStudensByStaff" Method="getStudensByStaff">
+    <Parameter Name="staffId" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="getStudensByStaffResult">
+      <Column Name="studentID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentMailAddr" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentAcademicYear" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="studentAvatar" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="studentBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentAddr" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="studentPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSupervisorID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSecondMarkerID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentLastLogin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStudensByStatus" Method="getStudensByStatus">
+    <Parameter Name="studentStatus" Type="System.Int32" DbType="Int" />
+    <ElementType Name="getStudensByStatusResult">
+      <Column Name="studentID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentMailAddr" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentAcademicYear" Type="System.String" DbType="VarChar(10)" CanBeNull="true" />
+      <Column Name="studentAvatar" Type="System.String" DbType="VarChar(250) NOT NULL" CanBeNull="false" />
+      <Column Name="studentBirth" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentAddr" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="studentPhone" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSupervisorID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentSecondMarkerID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentLastLogin" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="studentStatus" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStudentNameByID" Method="getStudentNameByID">
+    <Parameter Name="ID" Parameter="iD" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="getStudentNameByIDResult">
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getStudentsUploads" Method="getStudentsUploads">
+    <Parameter Name="staffID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="studentName" Type="System.String" DbType="VarChar(150)" />
+    <ElementType Name="getStudentsUploadsResult">
+      <Column Name="studentID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="documentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="documentTitle" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="documentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="documentLink" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getTop5ActiveStaffs" Method="getTop5ActiveStaffs">
+    <ElementType Name="getTop5ActiveStaffsResult">
+      <Column Name="staffID" Type="System.String" DbType="VarChar(20) NOT NULL" CanBeNull="false" />
+      <Column Name="staffName" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="MessCount" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getTotalBlogPost" Method="getTotalBlogPost">
+    <Parameter Name="ID" Parameter="iD" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="getTotalBlogPostResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getTotalMadeAllocations" Method="getTotalMadeAllocations">
+    <Parameter Name="ID" Parameter="iD" Type="System.String" DbType="VarChar(20)" />
+    <ElementType Name="getTotalMadeAllocationsResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.getUserUploads" Method="getUserUploads">
+    <Parameter Name="uploader" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="topic" Type="System.String" DbType="VarChar(100)" />
+    <ElementType Name="getUserUploadsResult">
+      <Column Name="documentID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="documentTitle" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="documentDate" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="documentLink" Type="System.String" DbType="VarChar(150) NOT NULL" CanBeNull="false" />
+      <Column Name="studentName" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="staffName" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.InsertStaff" Method="InsertStaff">
+    <Parameter Name="staffID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="staffName" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="staffPass" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="staffMailAddr" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="staffAvatar" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="staffBirth" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="staffAddr" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="staffPhone" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="staffType" Type="System.Int32" DbType="Int" />
+    <Parameter Name="staffStatus" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.InserttblStudents" Method="InserttblStudents">
+    <Parameter Name="studentID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="studentName" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="studentPass" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="studentMailAddr" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="studentAcademicYear" Type="System.String" DbType="VarChar(10)" />
+    <Parameter Name="studentAvatar" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="studentBirth" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="studentAddr" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="studentPhone" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="studentSupervisorID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="studentSecondMarkerID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="studentLastLogin" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="studentStatus" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.removeUserUpload" Method="removeUserUpload">
+    <Parameter Name="docID" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.reportTotalAllocations" Method="reportTotalAllocations">
+    <ElementType Name="reportTotalAllocationsResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.reportTotalInactiveStudents" Method="reportTotalInactiveStudents">
+    <ElementType Name="reportTotalInactiveStudentsResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.reportTotalNotAllocated" Method="reportTotalNotAllocated">
+    <ElementType Name="reportTotalNotAllocatedResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.reportTotalUser" Method="reportTotalUser">
+    <ElementType Name="reportTotalUserResult">
+      <Column Name="" Member="Column1" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </ElementType>
+  </Function>
+  <Function Name="dbo.updateLastLoginStudens" Method="updateLastLoginStudens">
+    <Parameter Name="studentID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="studentLastLogin" Type="System.DateTime" DbType="DateTime" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.updateStaff" Method="updateStaff">
+    <Parameter Name="staffID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="staffName" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="staffPass" Type="System.String" DbType="VarChar(50)" />
+    <Parameter Name="staffMailAddr" Type="System.String" DbType="VarChar(150)" />
+    <Parameter Name="staffAvatar" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="staffBirth" Type="System.DateTime" DbType="DateTime" />
+    <Parameter Name="staffAddr" Type="System.String" DbType="VarChar(250)" />
+    <Parameter Name="staffPhone" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="staffType" Type="System.Int32" DbType="Int" />
+    <Parameter Name="staffStatus" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.updateStaffsPass" Method="updateStaffsPass">
+    <Parameter Name="staffID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="staffPass" Type="System.String" DbType="VarChar(50)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.updateStaffsStatus" Method="updateStaffsStatus">
+    <Parameter Name="staffID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="staffStatus" Type="System.Int32" DbType="Int" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.updateUserUpload" Method="updateUserUpload">
+    <Parameter Name="docID" Type="System.Int32" DbType="Int" />
+    <Parameter Name="title" Type="System.String" DbType="VarChar(100)" />
+    <Parameter Name="link" Type="System.String" DbType="VarChar(150)" />
+    <Return Type="System.Int32" />
+  </Function>
+  <Function Name="dbo.getStaffsUploads" Method="getStaffsUploads">
+    <Parameter Name="StuID" Parameter="stuID" Type="System.String" DbType="VarChar(20)" />
+    <Parameter Name="StaffName" Parameter="staffName" Type="System.String" DbType="VarChar(150)" />
+    <ElementType Name="getStaffsUploadsResult">
+      <Column Name="staffID" Type="System.String" DbType="VarChar(20)" CanBeNull="true" />
+      <Column Name="staffName" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="documentID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="documentTitle" Type="System.String" DbType="VarChar(100)" CanBeNull="true" />
+      <Column Name="documentDate" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="documentLink" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+    </ElementType>
+  </Function>
+</Database>
